@@ -18,7 +18,7 @@ namespace Backend.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult GetDevice([FromForm] string id)
+		public IActionResult GetDevice([FromQuery] string id)
 		{
 			return new JsonResult(_databaseManager.GetDevice(id));
 		}
