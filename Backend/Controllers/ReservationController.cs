@@ -1,7 +1,9 @@
-﻿using Backend.CBR;
-using Backend.Services;
+﻿using Backend.CaseBasedReasoning;
+using Backend.CaseBasedReasoning.Reservations;
+using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace Backend.Controllers
 {
@@ -19,8 +21,12 @@ namespace Backend.Controllers
 		[HttpGet("test")]
 		public IActionResult Test()
 		{
-			CBRMain cbr = new();
-			return new JsonResult(cbr.GetResult());
+			var t = new System.TimeSpan(0, 5, 0);
+			var mock = new DataSourceMock();
+			var rule = new ReservationRule(DataSourceMock.Alice, DataSourceMock.Press.FullName);
+			CBR<Reservation> cbr = new ReservationCBR(mock, mock, rule, rule.Person, rule.DeviceFullName);
+			var res = cbr.GetResult();
+			return new JsonResult(res.Select(x => new { Start = x.Start, End = x.End }));
 		}
 	}
 }

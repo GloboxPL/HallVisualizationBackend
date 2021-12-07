@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Backend.CBR
+namespace Backend.CaseBasedReasoning
 {
-	public interface ISimilarityMeasure<T>
+	public interface ISimilarity<T>
 	{
 		IEnumerable<T> GetSimilarCases(IEnumerable<T> allCases);
 	}

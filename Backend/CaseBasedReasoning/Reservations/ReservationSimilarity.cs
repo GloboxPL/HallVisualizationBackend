@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Backend.CBR
+namespace Backend.CaseBasedReasoning
 {
-	public class TempSimilarity : ISimilarityMeasure<Reservation>
+	public class ReservationSimilarity : ISimilarity<Reservation>
 	{
 		private string person;
-		public TempSimilarity(string person)
+		public ReservationSimilarity(string person)
 		{
 			this.person = person;
 		}

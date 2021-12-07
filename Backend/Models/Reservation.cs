@@ -7,6 +7,7 @@ namespace Backend.Models
 		public Guid Id { get; set; }
 		public DateTime Start { get; set; }
 		public DateTime End { get; set; }
+		public TimeSpan Duration => End - Start;
 		public string Person { get; set; }
 		public Device Device { get; set; }
 		public string Description { get; set; }
