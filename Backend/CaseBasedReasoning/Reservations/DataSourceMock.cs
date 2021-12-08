@@ -47,7 +47,15 @@ namespace Backend.CaseBasedReasoning.Reservations
 			new Reservation(new DateTime(2021, 12, 2, 17, 0, 0), new DateTime(2021, 12, 2, 18, 0, 0), Alice, Press),
 			new Reservation(new DateTime(2021, 12, 2, 18, 0, 0), new DateTime(2021, 12, 2, 20, 0, 0), Alice, Zwick),
 			new Reservation(new DateTime(2021, 12, 3, 8, 0, 0), new DateTime(2021, 12, 3, 11, 0, 0), Bob, Press),
-			new Reservation(new DateTime(2021, 12, 8, 11, 0, 0), new DateTime(2021, 12, 8, 12, 30, 0), Alice, Press)
+			new Reservation(new DateTime(2021, 12, 8, 11, 0, 0), new DateTime(2021, 12, 8, 12, 30, 0), Alice, Press),
+
+			new Reservation(new DateTime(2021, 11, 22, 9, 30, 0), new DateTime(2021, 11, 22, 10, 0, 0), Bob, Press),
+			new Reservation(new DateTime(2021, 11, 15, 9, 0, 0), new DateTime(2021, 11, 29, 9, 0, 0), Bob, Press),
+			new Reservation(new DateTime(2021, 11, 16, 10, 0, 0), new DateTime(2021, 11, 16, 11, 0, 0), Bob, Press),
+			new Reservation(new DateTime(2021, 11, 9, 11, 0, 0), new DateTime(2021, 11, 9, 12, 0, 0), Bob, Press),
+			new Reservation(new DateTime(2021, 11, 2, 11, 0, 0), new DateTime(2021, 11, 2, 12, 0, 0), Bob, Press),
+			new Reservation(new DateTime(2021, 12, 14, 10, 30, 0), new DateTime(2021, 12, 14, 11, 15, 0), Alice, Press),
+			new Reservation(new DateTime(2021, 12, 14, 18, 0, 0), new DateTime(2021, 12, 14, 19, 0, 0), Alice, Press),
 		};
 
 		public IEnumerable<Reservation> GetFilteredData(params object[] args) //TODO

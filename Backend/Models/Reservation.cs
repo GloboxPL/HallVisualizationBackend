@@ -14,6 +14,7 @@ namespace Backend.Models
 
 		public Reservation(DateTime start, DateTime end, string person, Device device, string description = "")
 		{
+			if (start >= end) throw new ArgumentException("Start date should be earlier than end date");
 			Id = Guid.NewGuid();
 			Start = start;
 			End = end;

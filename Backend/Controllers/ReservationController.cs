@@ -23,7 +23,7 @@ namespace Backend.Controllers
 		{
 			var t = new System.TimeSpan(0, 5, 0);
 			var mock = new DataSourceMock();
-			var rule = new ReservationRule(DataSourceMock.Alice, DataSourceMock.Press.FullName);
+			var rule = new ReservationRule(DataSourceMock.Bob, DataSourceMock.Press.FullName);
 			CBR<Reservation> cbr = new ReservationCBR(mock, mock, rule, rule.Person, rule.DeviceFullName);
 			var res = cbr.GetResult();
 			return new JsonResult(res.Select(x => new { Start = x.Start, End = x.End }));
