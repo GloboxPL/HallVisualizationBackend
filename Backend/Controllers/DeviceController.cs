@@ -1,32 +1,34 @@
-﻿using Backend.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
+using VuzixApp.Domain.Models;
+using VuzixApp.Domain.Services;
 
-namespace Backend.Controllers
+namespace VuzixApp.API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
 	public class DeviceController : ControllerBase
 	{
 		private readonly ILogger<DeviceController> _logger;
-		private readonly IDatabaseManager _databaseManager;
+		private readonly IDeviceService _deviceService;
 
-		public DeviceController(ILogger<DeviceController> logger, IDatabaseManager databaseManager)
+		public DeviceController(ILogger<DeviceController> logger, IDeviceService deviceService)
 		{
 			_logger = logger;
-			_databaseManager = databaseManager;
+			_deviceService = deviceService;
 		}
 
 		[HttpGet]
-		public IActionResult GetDevice([FromQuery] string id)
+		public Task<Device> GetDevice([FromQuery] string id)
 		{
-			return new JsonResult(_databaseManager.GetDevice(id));
+			var device = _deviceService.GetDevice(id);
+			return Task.FromResult(device);
 		}
 
 		[HttpGet("all")]
-		public IActionResult GetAllDevice()
+		public Task<IEnumerable<Device>> GetAllDevice()
 		{
-			return new JsonResult(_databaseManager.GetAllDevices());
+			var devices = _deviceService.GetAllDevices();
+			return Task.FromResult(devices);
 		}
 	}
 }
