@@ -2,22 +2,24 @@
 
 public class Reservation
 {
-    public Guid Id { get; set; }
+    public string Id { get; init; } = string.Empty;
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
     public TimeSpan Duration => End - Start;
-    public string Person { get; set; }
-    public Device Device { get; set; }
-    public string Description { get; set; }
+    public string UserId { get; }
+    public string DeviceId { get; }
 
-    public Reservation(DateTime start, DateTime end, string person, Device device, string description = "")
+    public Reservation(DateTime start, DateTime end, string userId, string deviceId)
     {
-        if (start >= end) throw new ArgumentException("Start date should be earlier than end date");
-        Id = Guid.NewGuid();
+        Validate(start, end);
         Start = start;
         End = end;
-        Person = person;
-        Device = device;
-        Description = description;
+        UserId = userId;
+        DeviceId = deviceId;
+    }
+
+    private static void Validate(DateTime start, DateTime end)
+    {
+        if (start >= end) throw new ArgumentException("Start date should be earlier than end date");
     }
 }

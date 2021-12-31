@@ -37,37 +37,37 @@ public class DataSourceMock : IDataSource<Reservation>, IReservationChecker
 
 	public static List<Reservation> Reservations = new()
 	{
-		new Reservation(new DateTime(2021, 11, 29, 8, 0, 0), new DateTime(2021, 11, 29, 9, 0, 0), Bob, Press),
-		new Reservation(new DateTime(2021, 11, 29, 10, 0, 0), new DateTime(2021, 11, 29, 11, 0, 0), Bob, Zwick),
-		new Reservation(new DateTime(2021, 11, 30, 9, 0, 0), new DateTime(2021, 11, 30, 11, 0, 0), Bob, Zwick),
-		new Reservation(new DateTime(2021, 12, 1, 12, 0, 0), new DateTime(2021, 12, 1, 13, 0, 0), Alice, Press),
-		new Reservation(new DateTime(2021, 12, 1, 15, 0, 0), new DateTime(2021, 12, 1, 17, 0, 0), Alice, Press),
-		new Reservation(new DateTime(2021, 12, 2, 17, 0, 0), new DateTime(2021, 12, 2, 18, 0, 0), Alice, Press),
-		new Reservation(new DateTime(2021, 12, 2, 18, 0, 0), new DateTime(2021, 12, 2, 20, 0, 0), Alice, Zwick),
-		new Reservation(new DateTime(2021, 12, 3, 8, 0, 0), new DateTime(2021, 12, 3, 11, 0, 0), Bob, Press),
-		new Reservation(new DateTime(2021, 12, 8, 11, 0, 0), new DateTime(2021, 12, 8, 12, 30, 0), Alice, Press),
-
-		new Reservation(new DateTime(2021, 11, 22, 9, 30, 0), new DateTime(2021, 11, 22, 10, 0, 0), Bob, Press),
-		new Reservation(new DateTime(2021, 11, 15, 9, 0, 0), new DateTime(2021, 11, 29, 9, 0, 0), Bob, Press),
-		new Reservation(new DateTime(2021, 11, 16, 10, 0, 0), new DateTime(2021, 11, 16, 11, 0, 0), Bob, Press),
-		new Reservation(new DateTime(2021, 11, 9, 11, 0, 0), new DateTime(2021, 11, 9, 12, 0, 0), Bob, Press),
-		new Reservation(new DateTime(2021, 11, 2, 11, 0, 0), new DateTime(2021, 11, 2, 12, 0, 0), Bob, Press),
-		new Reservation(new DateTime(2021, 12, 14, 10, 30, 0), new DateTime(2021, 12, 14, 11, 15, 0), Alice, Press),
-		new Reservation(new DateTime(2021, 12, 14, 18, 0, 0), new DateTime(2021, 12, 14, 19, 0, 0), Alice, Press),
+		// new Reservation(new DateTime(2021, 11, 29, 8, 0, 0), new DateTime(2021, 11, 29, 9, 0, 0), Bob, Press),
+		// new Reservation(new DateTime(2021, 11, 29, 10, 0, 0), new DateTime(2021, 11, 29, 11, 0, 0), Bob, Zwick),
+		// new Reservation(new DateTime(2021, 11, 30, 9, 0, 0), new DateTime(2021, 11, 30, 11, 0, 0), Bob, Zwick),
+		// new Reservation(new DateTime(2021, 12, 1, 12, 0, 0), new DateTime(2021, 12, 1, 13, 0, 0), Alice, Press),
+		// new Reservation(new DateTime(2021, 12, 1, 15, 0, 0), new DateTime(2021, 12, 1, 17, 0, 0), Alice, Press),
+		// new Reservation(new DateTime(2021, 12, 2, 17, 0, 0), new DateTime(2021, 12, 2, 18, 0, 0), Alice, Press),
+		// new Reservation(new DateTime(2021, 12, 2, 18, 0, 0), new DateTime(2021, 12, 2, 20, 0, 0), Alice, Zwick),
+		// new Reservation(new DateTime(2021, 12, 3, 8, 0, 0), new DateTime(2021, 12, 3, 11, 0, 0), Bob, Press),
+		// new Reservation(new DateTime(2021, 12, 8, 11, 0, 0), new DateTime(2021, 12, 8, 12, 30, 0), Alice, Press),
+		//
+		// new Reservation(new DateTime(2021, 11, 22, 9, 30, 0), new DateTime(2021, 11, 22, 10, 0, 0), Bob, Press),
+		// new Reservation(new DateTime(2021, 11, 15, 9, 0, 0), new DateTime(2021, 11, 29, 9, 0, 0), Bob, Press),
+		// new Reservation(new DateTime(2021, 11, 16, 10, 0, 0), new DateTime(2021, 11, 16, 11, 0, 0), Bob, Press),
+		// new Reservation(new DateTime(2021, 11, 9, 11, 0, 0), new DateTime(2021, 11, 9, 12, 0, 0), Bob, Press),
+		// new Reservation(new DateTime(2021, 11, 2, 11, 0, 0), new DateTime(2021, 11, 2, 12, 0, 0), Bob, Press),
+		// new Reservation(new DateTime(2021, 12, 14, 10, 30, 0), new DateTime(2021, 12, 14, 11, 15, 0), Alice, Press),
+		// new Reservation(new DateTime(2021, 12, 14, 18, 0, 0), new DateTime(2021, 12, 14, 19, 0, 0), Alice, Press),
 	};
 
 	public IEnumerable<Reservation> GetFilteredData(params object[] args) //TODO
 	{
-		var t = Reservations.GroupBy(x => x.Person);
+		var t = Reservations.GroupBy(x => x.UserId);
 
 		IEnumerable<Reservation> result = Reservations;
 		if (args[0] is string person)
 		{
-			result = result.Where(x => x.Person == person);
+			result = result.Where(x => x.UserId == person);
 		}
 		if (args[1] is string deviceFullName)
 		{
-			result = result.Where(x => x.Device.FullName == deviceFullName);
+			// result = result.Where(x => x.Device.FullName == deviceFullName);
 		}
 		return result;
 	}

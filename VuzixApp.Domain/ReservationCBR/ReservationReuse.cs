@@ -8,7 +8,7 @@ public class ReservationReuse : IReuse<Reservation>
 	private readonly IReservationChecker _checker;
 	private readonly ReservationRule _rule;
 	private string person;
-	private Device device;
+	private Device device = default; //zmienic
 
 	public ReservationReuse(IReservationChecker checker, ReservationRule rule)
 	{
@@ -18,8 +18,8 @@ public class ReservationReuse : IReuse<Reservation>
 
 	IEnumerable<Reservation> IReuse<Reservation>.GetAdaptedCases(IEnumerable<Reservation> cases)
 	{
-		person = cases.First().Person;
-		device = cases.First().Device;
+		person = cases.First().UserId;
+		// device = cases.First().Device;
 		var aggregation = new AggregatedReservations(cases.ToList()); //should contain all needed stats
 		var since = RoundTime(_rule.Since ?? DateTime.Now, new TimeSpan(0, 5, 0));
 		var until = _rule.Until ?? since.AddDays(7);
@@ -67,7 +67,7 @@ public class ReservationReuse : IReuse<Reservation>
 			var newEnd = newStart + duration;
 			while (newStart >= freeTime.Item1 && newEnd <= freeTime.Item2) // czy 1 warunek potrzebny?
 			{
-				possibilities.Add(new Reservation(newStart, newEnd, person, device));
+				//possibilities.Add(new Reservation(newStart, newEnd, person, device));
 				newStart = newStart.AddMinutes(5);
 				newEnd = newStart + duration;
 			}
