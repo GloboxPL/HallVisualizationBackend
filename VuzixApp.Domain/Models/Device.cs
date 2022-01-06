@@ -11,7 +11,7 @@ public class Device
     public int Efficiency { get; set; }
     public string Socket { get; set; } = string.Empty;
     public int Height { get; set; }
-    public DeviceStatus Status { get; set; } = DeviceStatus.Wyłączona;
+    public DeviceStatus Status { get; set; } = DeviceStatus.Off;
     public string StatusDescription { get; set; } = string.Empty;
     public IEnumerable<Reservation> Reservations { get; } = new List<Reservation>();
     public DateTime TechnicalExaminationDate { get; set; }

@@ -31,9 +31,11 @@ public class Startup
 				Configuration.GetSection("Mongo")["Database"])
 			);
 		services.AddScoped<IDeviceDataProvider, DeviceDataProvider>();
+		services.AddScoped<IReservationDataProvider, ReservationDataProvider>();
 
 		// Domain
 		services.AddScoped<IDeviceService, DeviceService>();
+		services.AddScoped<IReservationService, ReservationService>();
 	}
 
 	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

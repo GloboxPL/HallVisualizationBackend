@@ -3,36 +3,42 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using VuzixApp.Domain.DataProviderInterfaces;
 using VuzixApp.Domain.Models;
+using Reservation = VuzixApp.DAL.DatabaseModels.Reservation;
+using User = VuzixApp.DAL.DatabaseModels.User;
 
 namespace VuzixApp.DAL.Providers;
 
 public class DeviceDataProvider : IDeviceDataProvider
 {
-    private readonly MongoContext _context;
-    private readonly IMongoCollection<DatabaseModels.Device> _devices;
     private readonly Mapper _mapper;
+    private readonly MongoContext _context;
 
     public DeviceDataProvider(MongoContext mongoContext)
     {
         _context = mongoContext;
-        _devices = _context.Database.GetCollection<DatabaseModels.Device>("devices");
         _mapper = new Mapper(MapperSettings.Configuration);
     }
 
-    public IEnumerable<Device> GetAllDevices(int hallId)
-    {
-        var devices = _devices.Find(x => x.HallId == hallId).ToEnumerable();
-        return devices.Select(_mapper.Map<Device>);
-    }
 
     public Device? GetDevice(string id)
     {
-        var device = _devices.Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
-        var newDevice = new DAL.DatabaseModels.Device()
-        {
-            FullName = "MyDevice"
-        };
-        _devices.InsertOne(newDevice);
+        var device = _context.Devices.Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
         return device != null ? _mapper.Map<Device>(device) : null;
+    }
+
+    public bool IsDeviceExist(string id)
+    {
+        return _context.Devices.Find(x => x.Id == new ObjectId(id)).Any();
+    }
+
+    public IEnumerable<Device> GetAllDevices(int? hallId = null)
+    {
+        var devices = _context.Devices.Find(x => x.HallId == hallId).ToEnumerable();
+        return devices.Select(_mapper.Map<Device>);
+    }
+
+    public Device UpdateDevice(Device device)
+    {
+        throw new NotImplementedException();
     }
 }

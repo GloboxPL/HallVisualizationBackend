@@ -2,7 +2,7 @@
 
 public class Reservation
 {
-    public string Id { get; init; } = string.Empty;
+    public string Id { get; set; } = string.Empty;
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
     public TimeSpan Duration => End - Start;

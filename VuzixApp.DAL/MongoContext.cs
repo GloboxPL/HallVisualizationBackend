@@ -1,20 +1,26 @@
 ﻿using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VuzixApp.DAL;
 
 public class MongoContext
 {
-	private readonly MongoClient _client;
-	public IMongoDatabase Database { get; }
+    private const string DevicesCollectionName = "Devices";
+    private const string ReservationsCollectionName = "Reservations";
+    private const string UsersCollectionName = "Users";
 
-	public MongoContext(string connectionString, string databaseName)
-	{
-		_client = new(connectionString);
-		Database = _client.GetDatabase(databaseName);
-	}
+    public MongoClient Client { get; }
+    public IMongoDatabase Database { get; }
+
+    public IMongoCollection<DatabaseModels.Device> Devices { get; }
+    public IMongoCollection<DatabaseModels.Reservation> Reservations { get; }
+    public IMongoCollection<DatabaseModels.User> Users { get; }
+
+    public MongoContext(string connectionString, string databaseName)
+    {
+        Client = new MongoClient(connectionString);
+        Database = Client.GetDatabase(databaseName);
+        Devices = Database.GetCollection<DatabaseModels.Device>(DevicesCollectionName);
+        Reservations = Database.GetCollection<DatabaseModels.Reservation>(ReservationsCollectionName);
+        Users = Database.GetCollection<DatabaseModels.User>(UsersCollectionName);
+    }
 }

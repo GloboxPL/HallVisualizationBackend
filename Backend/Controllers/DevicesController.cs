@@ -6,12 +6,12 @@ namespace VuzixApp.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class DeviceController : ControllerBase
+public class DevicesController : ControllerBase
 {
-	private readonly ILogger<DeviceController> _logger;
+	private readonly ILogger<DevicesController> _logger;
 	private readonly IDeviceService _deviceService;
 
-	public DeviceController(ILogger<DeviceController> logger, IDeviceService deviceService)
+	public DevicesController(ILogger<DevicesController> logger, IDeviceService deviceService)
 	{
 		_logger = logger;
 		_deviceService = deviceService;

@@ -1,5 +1,6 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver;
 using VuzixApp.Domain.Models;
 
 namespace VuzixApp.DAL.DatabaseModels;
@@ -19,7 +20,7 @@ public class Device
 
     [BsonRepresentation(BsonType.String)]
     [BsonElement("status")]
-    public DeviceStatus Status { get; set; } = DeviceStatus.Wyłączona;
+    public DeviceStatus Status { get; set; } = DeviceStatus.Off;
 
     [BsonElement("statusDescription")] public string StatusDescription { get; set; } = string.Empty;
     [BsonElement("reservationIds")] public IEnumerable<ObjectId> ReservationIds { get; set; } = new List<ObjectId>();

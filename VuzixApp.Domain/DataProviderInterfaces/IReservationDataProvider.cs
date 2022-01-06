@@ -4,8 +4,6 @@ namespace VuzixApp.Domain.DataProviderInterfaces;
 
 public interface IReservationDataProvider
 {
-	Reservation GetReservation(Guid id);
-	IEnumerable<Reservation> GetLatestReservations(int count);
-	IEnumerable<Reservation> GetReservationsByTime(DateTime since, DateTime until);
-
+    Reservation AddReservation(Reservation reservation);
+    bool IsPossibilityToReserve(string deviceId, DateTime start, DateTime end);
 }
