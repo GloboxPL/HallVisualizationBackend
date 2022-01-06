@@ -1,0 +1,16 @@
+[{
+  "_id": {
+    "$oid": "6058f65d0b3ea66768d1c4d2"
+  },
+  "hallId": 0,
+  "baseImgSrc": "hall_0_base_v2.svg",
+  "detailedImgSrc": "hall_0_detailed.png",
+  "hallDims": [
+    54,
+    36
+  ],
+  "origin": [
+    0,
+    0
+  ]
+}]
