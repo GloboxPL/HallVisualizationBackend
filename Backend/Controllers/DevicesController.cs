@@ -21,6 +21,10 @@ public class DevicesController : ControllerBase
 	public Task<Device> GetDevice([FromQuery] string id)
 	{
 		var device = _deviceService.GetDevice(id);
+		if (device == null)
+		{
+			throw new Exception("Device not found");
+		}
 		return Task.FromResult(device);
 	}
 
@@ -29,5 +33,13 @@ public class DevicesController : ControllerBase
 	{
 		var devices = _deviceService.GetAllDevices();
 		return Task.FromResult(devices);
+	}
+
+	[HttpPut("qr-code")]
+	public Task<FileContentResult> GetDeviceQrCode([FromForm] string id)
+	{
+		var qrCode = _deviceService.GenerateQrCode(id);
+
+		return Task.FromResult(File(qrCode, "image/png", $"{id}.png"));
 	}
 }

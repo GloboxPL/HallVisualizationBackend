@@ -5,36 +5,42 @@ namespace VuzixApp.Domain.Services;
 
 public class ReservationService : IReservationService
 {
-    private readonly IReservationDataProvider _reservationDataProvider;
-    private readonly IDeviceDataProvider _deviceDataProvider;
+	private readonly IReservationDataProvider _reservationDataProvider;
+	private readonly IDeviceDataProvider _deviceDataProvider;
 
-    public ReservationService(IReservationDataProvider reservationDataProvider, IDeviceDataProvider deviceDataProvider)
-    {
-        _reservationDataProvider = reservationDataProvider;
-        _deviceDataProvider = deviceDataProvider;
-    }
+	public ReservationService(IReservationDataProvider reservationDataProvider, IDeviceDataProvider deviceDataProvider)
+	{
+		_reservationDataProvider = reservationDataProvider;
+		_deviceDataProvider = deviceDataProvider;
+	}
 
-    public Reservation AddReservation(DateTime start, DateTime end, string deviceId, string userId)
-    {
-        var reservation = new Reservation(start, end, userId, deviceId);
-        if (!_deviceDataProvider.IsDeviceExist(deviceId) ||
-            _reservationDataProvider.IsPossibilityToReserve(deviceId, start, end))
-        {
-            throw new Exception("Cannot reserve");
-        }
+	public Reservation? GetReservation(string id)
+	{
+		return _reservationDataProvider.GetReservation(id);
+	}
 
-        _reservationDataProvider.AddReservation(reservation);
-        return reservation;
-    }
+	public IEnumerable<Reservation> GetReservationsForDevice(string deviceId, DateTime? since = null,
+		DateTime? until = null)
+	{
+		return _reservationDataProvider.GetReservationsForDevice(deviceId, since, until);
+	}
 
-    public void RemoveReservation(string id)
-    {
-        throw new NotImplementedException();
-    }
+	public Reservation AddReservation(DateTime start, DateTime end, string deviceId, string userId)
+	{
+		var reservation = new Reservation(start, end, userId, deviceId);
+		var isDeviceExist = _deviceDataProvider.IsDeviceExist(deviceId);
+		var isPossibleToReserve = _reservationDataProvider.IsPossibleToReserve(deviceId, start, end);
+		if (!isDeviceExist || !isPossibleToReserve)
+		{
+			throw new Exception("Cannot reserve");
+		}
 
-    public IEnumerable<Reservation> GetReservationsForDevice(string deviceId, DateTime? since = null,
-        DateTime? until = null)
-    {
-        throw new NotImplementedException();
-    }
+		_reservationDataProvider.AddReservation(reservation);
+		return reservation;
+	}
+
+	public void RemoveReservation(string id)
+	{
+		_reservationDataProvider.RemoveReservation(id);
+	}
 }

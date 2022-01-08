@@ -10,35 +10,37 @@ namespace VuzixApp.DAL.Providers;
 
 public class DeviceDataProvider : IDeviceDataProvider
 {
-    private readonly Mapper _mapper;
-    private readonly MongoContext _context;
+	private readonly Mapper _mapper;
+	private readonly MongoContext _context;
 
-    public DeviceDataProvider(MongoContext mongoContext)
-    {
-        _context = mongoContext;
-        _mapper = new Mapper(MapperSettings.Configuration);
-    }
+	public DeviceDataProvider(MongoContext mongoContext)
+	{
+		_context = mongoContext;
+		_mapper = new Mapper(MapperSettings.Configuration);
+	}
 
 
-    public Device? GetDevice(string id)
-    {
-        var device = _context.Devices.Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
-        return device != null ? _mapper.Map<Device>(device) : null;
-    }
+	public Device? GetDevice(string id)
+	{
+		var device = _context.Devices.Find(x => x.Id == new ObjectId(id)).FirstOrDefault();
+		return _mapper.Map<Device>(device);
+	}
 
-    public bool IsDeviceExist(string id)
-    {
-        return _context.Devices.Find(x => x.Id == new ObjectId(id)).Any();
-    }
+	public bool IsDeviceExist(string id)
+	{
+		return _context.Devices.Find(x => x.Id == new ObjectId(id)).Any();
+	}
 
-    public IEnumerable<Device> GetAllDevices(int? hallId = null)
-    {
-        var devices = _context.Devices.Find(x => x.HallId == hallId).ToEnumerable();
-        return devices.Select(_mapper.Map<Device>);
-    }
+	public IEnumerable<Device> GetAllDevices(int? hallId = null)
+	{
+		var devices = hallId == null
+			? _context.Devices.Find(_ => true).ToEnumerable()
+			: _context.Devices.Find(x => x.HallId == hallId).ToEnumerable();
+		return devices.Select(_mapper.Map<Device>);
+	}
 
-    public Device UpdateDevice(Device device)
-    {
-        throw new NotImplementedException();
-    }
+	public Device UpdateDevice(Device device)
+	{
+		throw new NotImplementedException();
+	}
 }
