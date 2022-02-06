@@ -11,7 +11,7 @@ public class User
     [BsonElement("email")] public string Email { get; set; } = string.Empty;
     [BsonElement("name")] public string Name { get; set; } = string.Empty;
     [BsonElement("surname")] public string Surname { get; set; } = string.Empty;
-    [BsonElement("password")] public string Password { get; set; } = string.Empty;
+    [BsonElement("passwordHash")] public string PasswordHash { get; set; } = string.Empty;
 
     [BsonRepresentation(BsonType.String)]
     [BsonElement("role")]

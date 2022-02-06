@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using VuzixApp.DAL;
 using VuzixApp.DAL.Providers;
 using VuzixApp.Domain.DataProviderInterfaces;
+using VuzixApp.Domain.Models;
 using VuzixApp.Domain.Services;
 
 namespace VuzixApp.API;
@@ -32,10 +34,13 @@ public class Startup
 			);
 		services.AddScoped<IDeviceDataProvider, DeviceDataProvider>();
 		services.AddScoped<IReservationDataProvider, ReservationDataProvider>();
+		services.AddScoped<IUserDataProvider, UserDataProvider>();
 
 		// Domain
 		services.AddScoped<IDeviceService, DeviceService>();
 		services.AddScoped<IReservationService, ReservationService>();
+		services.AddScoped<IUserService, UserService>();
+		services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 	}
 
 	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
