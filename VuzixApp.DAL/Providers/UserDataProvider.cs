@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MongoDB.Driver;
 using VuzixApp.Domain.DataProviderInterfaces;
 using VuzixApp.Domain.Models;
 
@@ -18,6 +19,12 @@ public class UserDataProvider : IUserDataProvider
 	{
 		var dbUser = _mapper.Map<DatabaseModels.User>(user);
 		_context.Users.InsertOne(dbUser);
+		return _mapper.Map<User>(dbUser);
+	}
+
+	public User? GetUserByEmail(string email)
+	{
+		var dbUser = _context.Users.Find(u => u.Email == email).FirstOrDefault();
 		return _mapper.Map<User>(dbUser);
 	}
 }

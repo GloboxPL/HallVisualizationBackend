@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 using VuzixApp.DAL;
 using VuzixApp.DAL.Providers;
 using VuzixApp.Domain.DataProviderInterfaces;
@@ -20,10 +22,25 @@ public class Startup
 	public void ConfigureServices(IServiceCollection services)
 	{
 		// Common
+		services.AddAuthentication(option =>
+		{
+			option.DefaultAuthenticateScheme = "Bearer";
+			option.DefaultScheme = "Bearer";
+			option.DefaultChallengeScheme = "Bearer";
+		}).AddJwtBearer(cfg =>
+		{
+			var jwtSecretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY")
+				?? throw new Exception("Envirnonment variable JWT_SECRET_KEY does not exist.");
+			cfg.SaveToken = true;
+			cfg.TokenValidationParameters = new TokenValidationParameters
+			{
+				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretKey))
+			};
+		});
 		services.AddControllers();
 		services.AddSwaggerGen(c =>
 		{
-			c.SwaggerDoc("v1", new OpenApiInfo { Title = "Backend", Version = "v1" });
+			c.SwaggerDoc("v1", new OpenApiInfo { Title = "VuzixApp", Version = "v1" });
 		});
 
 		// DAL
@@ -51,6 +68,8 @@ public class Startup
 			app.UseSwagger();
 			app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VuzixApp v1"));
 		}
+
+		app.UseAuthentication();
 
 		app.UseHttpsRedirection();
 

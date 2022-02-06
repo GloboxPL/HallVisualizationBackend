@@ -4,4 +4,5 @@ namespace VuzixApp.Domain.DataProviderInterfaces;
 public interface IUserDataProvider
 {
 	User AddUser(User user);
+	User? GetUserByEmail(string email);
 }

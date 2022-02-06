@@ -23,5 +23,12 @@ public class UserController : ControllerBase
 		var user = _userService.AddUser(email, name, surname, password);
 		return Task.FromResult(user);
 	}
+
+	[HttpPost("login")]
+	public Task<string> Login([FromForm] string email, [FromForm] string password)
+	{
+		var token = _userService.GenerateJwt(email, password);
+		return Task.FromResult(token);
+	}
 }
 
