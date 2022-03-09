@@ -10,7 +10,7 @@ public class User
 	public Role Role { get; set; }
 	public string ProfilePicture { get; set; }
 
-	public User(string email, string name, string surname, Role role, string profileImage = "")
+	public User(string email, string name, string surname, Role role, string? profileImage = null)
 	{
 		Email = email;
 		Name = name;

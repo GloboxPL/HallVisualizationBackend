@@ -27,4 +27,5 @@ public class Device
 
     [BsonElement("technicalExaminationDate")]
     public DateTime TechnicalExaminationDate { get; set; }
+    [BsonElement("model3d")] public string Model3D { get; set; }
 }

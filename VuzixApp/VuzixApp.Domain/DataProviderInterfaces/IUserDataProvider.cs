@@ -5,4 +5,5 @@ public interface IUserDataProvider
 {
 	User AddUser(User user);
 	User? GetUserByEmail(string email);
+	User? GetUserById(string id);
 }

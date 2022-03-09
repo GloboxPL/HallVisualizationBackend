@@ -7,11 +7,14 @@ public class ReservationService : IReservationService
 {
 	private readonly IReservationDataProvider _reservationDataProvider;
 	private readonly IDeviceDataProvider _deviceDataProvider;
+	private readonly IUserDataProvider _userDataProvider;
 
-	public ReservationService(IReservationDataProvider reservationDataProvider, IDeviceDataProvider deviceDataProvider)
+
+	public ReservationService(IReservationDataProvider reservationDataProvider, IDeviceDataProvider deviceDataProvider, IUserDataProvider userDataProvider)
 	{
 		_reservationDataProvider = reservationDataProvider;
 		_deviceDataProvider = deviceDataProvider;
+		_userDataProvider = userDataProvider;
 	}
 
 	public Reservation? GetReservation(string id)
@@ -42,5 +45,20 @@ public class ReservationService : IReservationService
 	public void RemoveReservation(string id)
 	{
 		_reservationDataProvider.RemoveReservation(id);
+	}
+
+	public IEnumerable<User> GetUsersForReservations(IEnumerable<Reservation> reservations)
+	{
+		var users = new Dictionary<string, User>();
+		foreach (var reservation in reservations)
+		{
+			if (!users.ContainsKey(reservation.UserId))
+			{
+				var user = _userDataProvider.GetUserById(reservation.UserId);
+				if (user == null) throw new Exception();
+				users.Add(user.Id!, user);
+			}
+		}
+		return users.Values;
 	}
 }

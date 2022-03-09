@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VuzixApp.Domain.Models;
+using VuzixApp.API.DTOs.Responses;
 using VuzixApp.Domain.Services;
 
 namespace VuzixApp.API.Controllers;
@@ -20,7 +20,7 @@ public class UserController : ControllerBase
 	[HttpPost("register")]
 	public Task<User> AddUser([FromForm] string email, [FromForm] string name, [FromForm] string surname, [FromForm] string password)
 	{
-		var user = _userService.AddUser(email, name, surname, password);
+		var user = new User(_userService.AddUser(email, name, surname, password));
 		return Task.FromResult(user);
 	}
 

@@ -35,7 +35,8 @@
     "statusDescription": "",
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
-    }
+    },
+    "model3d": "asp_column"
   },
   {
     "_id": {
@@ -54,7 +55,8 @@
     "statusDescription": "",
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
-    }
+    },
+    "model3d": "induction_furnace_cooler"
   },
   {
     "_id": {
@@ -73,7 +75,8 @@
     "statusDescription": "",
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
-    }
+    },
+    "model3d": "draw_bench"
   },
   {
     "_id": {
@@ -111,7 +114,8 @@
     "statusDescription": "",
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
-    }
+    },
+    "model3d": "instron_big"
   },
   {
     "_id": {
@@ -130,7 +134,8 @@
     "statusDescription": "",
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
-    }
+    },
+    "model3d": "compressor"
   },
   {
     "_id": {
@@ -149,7 +154,8 @@
     "statusDescription": "",
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
-    }
+    },
+    "model3d": "pneumatic_hammer"
   },
   {
     "_id": {
@@ -168,7 +174,8 @@
     "statusDescription": "",
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
-    }
+    },
+    "model3d": "furnace_eltatrma"
   },
   {
     "_id": {
@@ -206,7 +213,8 @@
     "statusDescription": "",
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
-    }
+    },
+    "model3d": "engine"
   },
   {
     "_id": {
@@ -225,7 +233,8 @@
     "statusDescription": "",
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
-    }
+    },
+    "model3d": "induction_furnace_control"
   },
   {
     "_id": {
@@ -263,7 +272,8 @@
     "statusDescription": "",
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
-    }
+    },
+    "model3d": "inclined_rolling_mill"
   },
   {
     "_id": {
@@ -282,7 +292,8 @@
     "statusDescription": "",
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
-    }
+    },
+    "model3d": "zwick"
   },
   {
     "_id": {
@@ -306,6 +317,6 @@
     "technicalExaminationDate": {
       "$date": "2021-12-31T12:00:00Z"
     },
-    "model3d": "press500"
+    "model3d": "press500t"
   }
 ]

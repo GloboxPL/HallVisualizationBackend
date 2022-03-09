@@ -29,8 +29,11 @@ public class Startup
 			option.DefaultChallengeScheme = "Bearer";
 		}).AddJwtBearer(cfg =>
 		{
-			var jwtSecretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY")
-				?? throw new Exception("Envirnonment variable JWT_SECRET_KEY does not exist.");
+			var jwtSecretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
+			if (string.IsNullOrEmpty(jwtSecretKey))
+			{
+				throw new Exception("Envirnonment variable JWT_SECRET_KEY does not exist.");
+			}
 			cfg.SaveToken = true;
 			cfg.TokenValidationParameters = new TokenValidationParameters
 			{

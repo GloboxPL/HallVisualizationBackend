@@ -17,5 +17,5 @@ public class User
     [BsonElement("role")]
     public Role Role { get; set; } = Role.User;
 
-    [BsonElement("profilePicture")] public string? ProfilePicture { get; set; }
+    [BsonElement("profilePicture")] public string ProfilePicture { get; set; } = string.Empty;
 }

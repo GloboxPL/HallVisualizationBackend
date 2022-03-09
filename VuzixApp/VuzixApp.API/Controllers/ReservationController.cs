@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VuzixApp.API.DTOs.Responses;
 using VuzixApp.CBR;
 using VuzixApp.Domain.Models;
 using VuzixApp.Domain.ReservationCBR;
@@ -44,10 +45,13 @@ public class ReservationController : ControllerBase
 	}
 
 	[HttpGet("device")]
-	public Task<IEnumerable<Reservation>> GetReservationsForDevice([FromQuery] string deviceId, [FromQuery] DateTime? since, [FromQuery] DateTime? until)
+	public Task<IEnumerable<ReservationWithUser>> GetReservationsForDevice([FromQuery] string deviceId, [FromQuery] DateTime? since, [FromQuery] DateTime? until)
 	{
 		var reservations = _reservationService.GetReservationsForDevice(deviceId, since, until);
-		return Task.FromResult(reservations);
+		var users = _reservationService.GetUsersForReservations(reservations);
+		var reservationsWithUsers = reservations.Select(r => new ReservationWithUser(r, users.First(u => u.Id == r.UserId)));
+
+		return Task.FromResult(reservationsWithUsers);
 	}
 
 	[HttpPost]
