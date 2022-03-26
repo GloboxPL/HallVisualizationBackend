@@ -39,6 +39,20 @@ public class DeviceDataProvider : IDeviceDataProvider
 
 	public Device UpdateDevice(Device device)
 	{
-		throw new NotImplementedException();
+		var updateDefinition = Builders<DatabaseModels.Device>.Update
+			.Set(x => x.CustomId, device.CustomId)
+			.Set(x => x.HallId, device.HallId)
+			.Set(x => x.Symbol, device.Symbol)
+			.Set(x => x.ShortName, device.ShortName)
+			.Set(x => x.FullName, device.FullName)
+			.Set(x => x.Efficiency, device.Efficiency)
+			.Set(x => x.Socket, device.Socket)
+			.Set(x => x.Height, device.Height)
+			.Set(x => x.Status, device.Status)
+			.Set(x => x.StatusDescription, device.StatusDescription)
+			.Set(x => x.TechnicalExaminationDate, device.TechnicalExaminationDate)
+			.Set(x => x.Model3D, device.Model3D);
+		_context.Devices.UpdateOne(x => x.Id == new ObjectId(device.Id), updateDefinition);
+		return device;
 	}
 }

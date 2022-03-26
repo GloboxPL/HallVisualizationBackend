@@ -28,6 +28,27 @@ public class DevicesController : ControllerBase
 		return Task.FromResult(device);
 	}
 
+	[HttpPost]
+	public Task<Device> UpdateDevice(
+		[FromQuery] string id,
+		[FromForm] int? customId,
+		[FromForm] int hallId,
+		[FromForm] string? symbol,
+		[FromForm] string? shortName,
+		[FromForm] string? fullName,
+		[FromForm] int? efficiency,
+		[FromForm] string? socket,
+		[FromForm] int? height,
+		[FromForm] DeviceStatus? status,
+		[FromForm] string? statusDescription,
+		[FromForm] DateTime? technicalExaminationDate,
+		[FromForm] string? model3D
+		)
+	{
+		var device = _deviceService.UpdateDevice(id, customId, hallId, symbol, shortName, fullName, efficiency, socket, height, status, statusDescription, technicalExaminationDate, model3D); ;
+		return Task.FromResult(device);
+	}
+
 	[HttpGet("all")]
 	public Task<IEnumerable<Device>> GetAllDevice()
 	{

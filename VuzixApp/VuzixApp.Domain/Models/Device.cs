@@ -14,5 +14,5 @@ public class Device
 	public DeviceStatus Status { get; set; } = DeviceStatus.Off;
 	public string StatusDescription { get; set; } = string.Empty;
 	public DateTime TechnicalExaminationDate { get; set; }
-	public string Model3D { get; set; }
+	public string? Model3D { get; set; }
 }
