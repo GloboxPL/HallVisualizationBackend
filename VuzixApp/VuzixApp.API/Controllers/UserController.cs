@@ -21,6 +21,7 @@ public class UserController : ControllerBase
 	public Task<User> AddUser([FromForm] string email, [FromForm] string name, [FromForm] string surname, [FromForm] string password)
 	{
 		var user = new User(_userService.AddUser(email, name, surname, password));
+		_logger.LogInformation("New user {Email} ({Name} {Surname}) was registered.", user.Email, user.Name, user.Surname);
 		return Task.FromResult(user);
 	}
 
@@ -28,6 +29,7 @@ public class UserController : ControllerBase
 	public Task<string> Login([FromForm] string email, [FromForm] string password)
 	{
 		var token = _userService.GenerateJwt(email, password);
+		_logger.LogInformation("User {Email} was authenticated. Token was sent.", email);
 		return Task.FromResult(token);
 	}
 }

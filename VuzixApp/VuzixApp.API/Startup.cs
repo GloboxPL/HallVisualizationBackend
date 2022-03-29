@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -24,9 +25,10 @@ public class Startup
 		// Common
 		services.AddAuthentication(option =>
 		{
-			option.DefaultAuthenticateScheme = "Bearer";
-			option.DefaultScheme = "Bearer";
-			option.DefaultChallengeScheme = "Bearer";
+			option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+			option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
 		}).AddJwtBearer(cfg =>
 		{
 			var jwtSecretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
@@ -34,9 +36,12 @@ public class Startup
 			{
 				throw new Exception("Envirnonment variable JWT_SECRET_KEY does not exist.");
 			}
+			cfg.RequireHttpsMetadata = false; // TODO remove
 			cfg.SaveToken = true;
 			cfg.TokenValidationParameters = new TokenValidationParameters
 			{
+				ValidateIssuer = false,
+				ValidateAudience = false,
 				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretKey))
 			};
 		});
@@ -44,7 +49,27 @@ public class Startup
 		services.AddSwaggerGen(c =>
 		{
 			c.SwaggerDoc("v1", new OpenApiInfo { Title = "VuzixApp", Version = "v1" });
+			c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme()
+			{
+				Name = "Authorization",
+				Type = SecuritySchemeType.ApiKey,
+				Scheme = JwtBearerDefaults.AuthenticationScheme,
+				BearerFormat = "JWT",
+				In = ParameterLocation.Header,
+				Description = "JWT Authorization header using the Bearer scheme."
+			});
+			c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+			{
+				new OpenApiSecurityScheme {
+					Reference = new OpenApiReference {
+						Type = ReferenceType.SecurityScheme,
+						Id = JwtBearerDefaults.AuthenticationScheme
+					}
+				},
+				new string[] {}
+			}});
 		});
+		services.AddHttpContextAccessor();
 
 		// DAL
 		services.AddSingleton(
@@ -68,9 +93,9 @@ public class Startup
 		if (env.IsDevelopment())
 		{
 			app.UseDeveloperExceptionPage();
-			app.UseSwagger();
-			app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VuzixApp v1"));
 		}
+		app.UseSwagger();
+		app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
 
 		app.UseAuthentication();
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VuzixApp.API.DTOs.Responses;
 using VuzixApp.CBR;
 using VuzixApp.Domain.Models;
@@ -7,12 +8,11 @@ using VuzixApp.Domain.Services;
 
 namespace VuzixApp.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class ReservationController : ControllerBase
 {
-	private const string UserId = "61d76a11c90a2bb9a40dae29";
-
 	private readonly ILogger<ReservationController> _logger;
 	private readonly IReservationService _reservationService;
 
@@ -57,7 +57,7 @@ public class ReservationController : ControllerBase
 	[HttpPost]
 	public Task<Reservation> AddReservation([FromForm] string deviceId, [FromForm] DateTime start, [FromForm] DateTime end)
 	{
-		var reservation = _reservationService.AddReservation(start, end, deviceId, UserId);
+		var reservation = _reservationService.AddReservation(start, end, deviceId);
 		return Task.FromResult(reservation);
 	}
 

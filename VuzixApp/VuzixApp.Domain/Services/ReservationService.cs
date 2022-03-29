@@ -8,13 +8,19 @@ public class ReservationService : IReservationService
 	private readonly IReservationDataProvider _reservationDataProvider;
 	private readonly IDeviceDataProvider _deviceDataProvider;
 	private readonly IUserDataProvider _userDataProvider;
+	private readonly IUserService _userService;
 
 
-	public ReservationService(IReservationDataProvider reservationDataProvider, IDeviceDataProvider deviceDataProvider, IUserDataProvider userDataProvider)
+	public ReservationService(
+		IReservationDataProvider reservationDataProvider,
+		IDeviceDataProvider deviceDataProvider,
+		IUserDataProvider userDataProvider,
+		IUserService userService)
 	{
 		_reservationDataProvider = reservationDataProvider;
 		_deviceDataProvider = deviceDataProvider;
 		_userDataProvider = userDataProvider;
+		_userService = userService;
 	}
 
 	public Reservation? GetReservation(string id)
@@ -28,9 +34,10 @@ public class ReservationService : IReservationService
 		return _reservationDataProvider.GetReservationsForDevice(deviceId, since, until);
 	}
 
-	public Reservation AddReservation(DateTime start, DateTime end, string deviceId, string userId)
+	public Reservation AddReservation(DateTime start, DateTime end, string deviceId)
 	{
-		var reservation = new Reservation(start, end, userId, deviceId);
+		var user = _userService.GetUserFromHttpRequest();
+		var reservation = new Reservation(start, end, user.Id!, deviceId);
 		var isDeviceExist = _deviceDataProvider.IsDeviceExist(deviceId);
 		var isPossibleToReserve = _reservationDataProvider.IsPossibleToReserve(deviceId, start, end);
 		if (!isDeviceExist || !isPossibleToReserve)

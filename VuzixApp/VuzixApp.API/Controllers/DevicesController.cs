@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VuzixApp.Domain.Models;
 using VuzixApp.Domain.Services;
 
 namespace VuzixApp.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class DevicesController : ControllerBase
@@ -50,10 +52,10 @@ public class DevicesController : ControllerBase
 	}
 
 	[HttpGet("all")]
-	public Task<IEnumerable<Device>> GetAllDevice()
+	public Task<IEnumerable<string>> GetAllDeviceIds()
 	{
-		var devices = _deviceService.GetAllDevices();
-		return Task.FromResult(devices);
+		var ids = _deviceService.GetAllDevices().Select(d => d.Id!);
+		return Task.FromResult(ids);
 	}
 
 	[HttpPut("qr-code")]

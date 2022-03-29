@@ -25,7 +25,7 @@ public class DeviceService : IDeviceService
 
 	public IEnumerable<Device> GetAllDevices()
 	{
-		return _deviceDataProvider.GetAllDevices(0);
+		return _deviceDataProvider.GetAllDevices();
 	}
 
 	public Device? GetDevice(string id)

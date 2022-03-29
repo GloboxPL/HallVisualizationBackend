@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,11 +13,16 @@ public class UserService : IUserService
 {
 	private readonly IUserDataProvider _userDataProvider;
 	private readonly IPasswordHasher<User> _passwordHasher;
+	private readonly IHttpContextAccessor _httpContentAccessor;
 
-	public UserService(IUserDataProvider userDataProvider, IPasswordHasher<User> passwordHasher)
+	public UserService(
+		IUserDataProvider userDataProvider,
+		IPasswordHasher<User> passwordHasher,
+		IHttpContextAccessor httpContentAccessor)
 	{
 		_userDataProvider = userDataProvider;
 		_passwordHasher = passwordHasher;
+		_httpContentAccessor = httpContentAccessor;
 	}
 
 	public User AddUser(string email, string name, string surname, string password)
@@ -41,11 +47,22 @@ public class UserService : IUserService
 		return GenerateJwt(user);
 	}
 
+	public User GetUserFromHttpRequest()
+	{
+		var httpContext = _httpContentAccessor.HttpContext ?? throw new Exception("No HttpContext.");
+		string id = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+		var user = _userDataProvider.GetUserById(id)?? throw new Exception("User not found.");
+		return user;
+	}
+
 	private static string GenerateJwt(User user)
 	{
+		if (user.Id == null) throw new Exception("Unknown user.");
+
 		var claims = new List<Claim>()
 		{
 			new Claim(ClaimTypes.Name, $"{user.Name} {user.Surname}"),
+			new Claim(ClaimTypes.NameIdentifier, user.Id),
 			new Claim(ClaimTypes.Role, user.Role.ToString()),
 			new Claim(ClaimTypes.Email, user.Email)
 		};
@@ -58,7 +75,7 @@ public class UserService : IUserService
 		var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
 		var token = new JwtSecurityToken(claims: claims, expires: DateTime.Now.AddMinutes(60), signingCredentials: credentials);
-		
+
 		var tokenHandler = new JwtSecurityTokenHandler();
 		return tokenHandler.WriteToken(token);
 	}
