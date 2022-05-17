@@ -1,28 +1,27 @@
 ﻿using VuzixApp.CBR;
 using VuzixApp.Domain.Models;
 
-namespace VuzixApp.Domain.ReservationCBR;
+namespace VuzixApp.ReservationDatesPrediction;
 
-public class ReservationReuse : IReuse<Reservation>
+public class Reuse : IReuse<Reservation>
 {
-	private readonly IReservationChecker _checker;
-	private readonly ReservationRule _rule;
-	private string person;
-	private Device device = default; //zmienic
+	private readonly string _userId;
+	private readonly string _deviceId;
+	private readonly IEnumerable<Tuple<DateTime, DateTime>> _freeDates;
 
-	public ReservationReuse(IReservationChecker checker, ReservationRule rule)
+	public Reuse(string userId, string deviceId, IEnumerable<Reservation> allDeviceReservations)
 	{
-		_checker = checker;
-		_rule = rule;
+		_userId = userId;
+		_deviceId = deviceId;
+		_freeDates = GetFreeDates(allDeviceReservations);
 	}
 
-	IEnumerable<Reservation> IReuse<Reservation>.GetAdaptedCases(IEnumerable<Reservation> cases)
+	IEnumerable<Reservation> IReuse<Reservation>.AdaptCases(IEnumerable<Reservation> cases)
 	{
-		person = cases.First().UserId;
 		// device = cases.First().Device;
-		var aggregation = new AggregatedReservations(cases.ToList()); //should contain all needed stats
-		var since = RoundTime(_rule.Since ?? DateTime.Now, new TimeSpan(0, 5, 0));
-		var until = _rule.Until ?? since.AddDays(7);
+		var aggregation = new AggregatedReservations(cases.Select(x => new Reservation(x.Start, x.End, _userId, _deviceId)).ToList()); //should contain all needed stats
+		var since = RoundTime(DateTime.Now, TimeSpan.FromMinutes(5));
+		var until = since.AddDays(7);
 		var duration = TimeSpan.FromHours(1);
 		IEnumerable<Reservation> possibilities = GetPossibilities(since, until, duration);
 		IEnumerable<Reservation> bestFitted = ChooseBestFitted(possibilities, aggregation);
@@ -38,7 +37,7 @@ public class ReservationReuse : IReuse<Reservation>
 			var reservationForDay = possibilities.Where(x => (int)x.Start.DayOfWeek == i % 7);
 			if (reservationForDay != null && reservationForDay.Any())
 			{
-				var scores = reservationForDay.Select(x => (Score(x.Start, (int)aggregation._medianHours[i - 1]), x)).OrderBy(x => x.Item1).AsEnumerable();
+				var scores = reservationForDay.Select(x => (Score(x.Start, aggregation._medianHours[i - 1]), x)).OrderBy(x => x.Item1).AsEnumerable();
 				bestFitted.Add(scores.First().Item2);
 			}
 		}
@@ -47,7 +46,7 @@ public class ReservationReuse : IReuse<Reservation>
 
 	private static DateTime RoundTime(DateTime dateTime, TimeSpan precision)
 	{
-		long ticks = (dateTime.Ticks + (precision.Ticks / 2) + 1) / precision.Ticks;
+		long ticks = (dateTime.Ticks + precision.Ticks / 2 + 1) / precision.Ticks;
 		return new DateTime(ticks * precision.Ticks, dateTime.Kind);
 	}
 
@@ -59,15 +58,14 @@ public class ReservationReuse : IReuse<Reservation>
 	private IEnumerable<Reservation> GetPossibilities(DateTime since, DateTime until, TimeSpan duration)
 	{
 		var possibilities = new List<Reservation>();
-		var freeTimes = _checker.GetFreeTimes(since, until);
 
-		foreach (var freeTime in freeTimes)
+		foreach (var freeTime in _freeDates)
 		{
 			var newStart = freeTime.Item1;//round
 			var newEnd = newStart + duration;
 			while (newStart >= freeTime.Item1 && newEnd <= freeTime.Item2) // czy 1 warunek potrzebny?
 			{
-				//possibilities.Add(new Reservation(newStart, newEnd, person, device));
+				possibilities.Add(new Reservation(newStart, newEnd, _userId, _deviceId));
 				newStart = newStart.AddMinutes(5);
 				newEnd = newStart + duration;
 			}
@@ -75,9 +73,34 @@ public class ReservationReuse : IReuse<Reservation>
 		return possibilities;
 	}
 
-	Reservation? IReuse<Reservation>.Adapt(Reservation reservation)
+	private static IEnumerable<Tuple<DateTime, DateTime>> GetFreeDates(IEnumerable<Reservation> reservations)
 	{
-		throw new NotImplementedException();
+		var start = RoundTime(DateTime.Now, TimeSpan.FromMinutes(5));
+		var until = start.AddDays(7);
+
+		if (!reservations.Any())
+		{
+			return new List<Tuple<DateTime, DateTime>>()
+			{
+				new (start, until)
+			};
+		}
+
+		var freeTimes = new List<Tuple<DateTime, DateTime>>();
+
+		foreach (var reservation in reservations)
+		{
+			if (reservation.Start > start)
+			{
+				freeTimes.Add(new(start, reservation.Start));
+			}
+			start = reservation.End;
+		}
+		if (start < until)
+		{
+			freeTimes.Add(new(start, until));
+		}
+		return freeTimes;
 	}
 }
 

@@ -9,7 +9,7 @@ using VuzixApp.Domain.Models;
 
 namespace VuzixApp.Domain.Services;
 
-public class UserService : IUserService
+public class UserService : IUserService, IUserAuthorization
 {
 	private readonly IUserDataProvider _userDataProvider;
 	private readonly IPasswordHasher<User> _passwordHasher;
@@ -51,7 +51,7 @@ public class UserService : IUserService
 	{
 		var httpContext = _httpContentAccessor.HttpContext ?? throw new Exception("No HttpContext.");
 		string id = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-		var user = _userDataProvider.GetUserById(id)?? throw new Exception("User not found.");
+		var user = _userDataProvider.GetUserById(id) ?? throw new Exception("User not found.");
 		return user;
 	}
 

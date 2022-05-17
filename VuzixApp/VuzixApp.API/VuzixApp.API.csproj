@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\VuzixApp.ReservationDatesPrediction\VuzixApp.ReservationDatesPrediction.csproj" />
     <ProjectReference Include="..\VuzixApp.DAL\VuzixApp.DAL.csproj" />
     <ProjectReference Include="..\VuzixApp.Domain\VuzixApp.Domain.csproj" />
   </ItemGroup>

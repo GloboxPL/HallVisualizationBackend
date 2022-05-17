@@ -10,11 +10,13 @@ public class UserController : ControllerBase
 {
 	private readonly ILogger<UserController> _logger;
 	private readonly IUserService _userService;
+	private readonly IUserAuthorization _userAuthorization;
 
-	public UserController(ILogger<UserController> logger, IUserService userService)
+	public UserController(ILogger<UserController> logger, IUserService userService, IUserAuthorization userAuthorization)
 	{
 		_logger = logger;
 		_userService = userService;
+		_userAuthorization = userAuthorization;
 	}
 
 	[HttpPost("register")]
@@ -28,8 +30,8 @@ public class UserController : ControllerBase
 	[HttpPost("login")]
 	public Task<string> Login([FromForm] string email, [FromForm] string password)
 	{
-		var token = _userService.GenerateJwt(email, password);
-		_logger.LogInformation("User {Email} was authenticated. Token was sent.", email);
+		var token = _userAuthorization.GenerateJwt(email, password);
+		_logger.LogInformation("User {Email} (referer: {Host}) was authenticated. Token was sent.", email, Request.Headers["Referer"]);
 		return Task.FromResult(token);
 	}
 }

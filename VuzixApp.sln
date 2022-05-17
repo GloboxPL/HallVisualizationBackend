@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VuzixApp.Domain", "VuzixApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VuzixApp.DAL", "VuzixApp\VuzixApp.DAL\VuzixApp.DAL.csproj", "{46AE2831-6917-4A88-81E1-8D0AE89A66CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VuzixApp.CBR", "VuzixApp\VuzixApp.CBR\VuzixApp.CBR.csproj", "{C58EA02F-1305-46F0-81FD-00787AF45CFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VuzixApp.CBR", "VuzixApp\VuzixApp.CBR\VuzixApp.CBR.csproj", "{C58EA02F-1305-46F0-81FD-00787AF45CFF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VuzixApp.ReservationDatesPrediction", "VuzixApp.ReservationDatesPrediction\VuzixApp.ReservationDatesPrediction.csproj", "{74265D36-8E75-44B9-B4AB-A45BBD8EF9BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VuzixApp.Models", "VuzixApp.Models\VuzixApp.Models.csproj", "{31C3AAF6-43E1-4791-AE13-62891BA24E80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{C58EA02F-1305-46F0-81FD-00787AF45CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C58EA02F-1305-46F0-81FD-00787AF45CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C58EA02F-1305-46F0-81FD-00787AF45CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74265D36-8E75-44B9-B4AB-A45BBD8EF9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74265D36-8E75-44B9-B4AB-A45BBD8EF9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74265D36-8E75-44B9-B4AB-A45BBD8EF9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74265D36-8E75-44B9-B4AB-A45BBD8EF9BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31C3AAF6-43E1-4791-AE13-62891BA24E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31C3AAF6-43E1-4791-AE13-62891BA24E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31C3AAF6-43E1-4791-AE13-62891BA24E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31C3AAF6-43E1-4791-AE13-62891BA24E80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

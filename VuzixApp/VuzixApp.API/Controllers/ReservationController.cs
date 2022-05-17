@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using VuzixApp.API.DTOs.Responses;
 using VuzixApp.CBR;
 using VuzixApp.Domain.Models;
-using VuzixApp.Domain.ReservationCBR;
 using VuzixApp.Domain.Services;
+using VuzixApp.ReservationDatesPrediction;
 
 namespace VuzixApp.API.Controllers;
 
@@ -15,22 +15,30 @@ public class ReservationController : ControllerBase
 {
 	private readonly ILogger<ReservationController> _logger;
 	private readonly IReservationService _reservationService;
+	private readonly IUserAuthorization _userAuthorization;
+	private readonly IRetrieve<Reservation> _retrive;
 
-	public ReservationController(ILogger<ReservationController> logger, IReservationService reservationService)
+	public ReservationController(
+		ILogger<ReservationController> logger,
+		IReservationService reservationService,
+		IUserAuthorization userAuthorization,
+		IRetrieve<Reservation> retrive)
 	{
 		_logger = logger;
 		_reservationService = reservationService;
+		_userAuthorization = userAuthorization;
+		_retrive = retrive;
 	}
 
-	[HttpGet("test")]
-	public IActionResult Test()
+	[HttpGet("propose")]
+	public Task<IEnumerable<Reservation>> ProposeBookingDates([FromQuery] string deviceId)
 	{
-		var t = new TimeSpan(0, 5, 0);
-		var mock = new DataSourceMock();
-		var rule = new ReservationRule(DataSourceMock.Bob, DataSourceMock.Press.FullName);
-		CBR<Reservation> cbr = new ReservationCBR(mock, mock, rule, rule.Person, rule.DeviceFullName);
-		var res = cbr.GetResult();
-		return new JsonResult(res.Select(x => new { Start = x.Start, End = x.End }));
+		var user = _userAuthorization.GetUserFromHttpRequest();
+		var dataR = new DataR(user.Id, deviceId);
+		var reuse = new Reuse(user.Id, deviceId, _reservationService.GetReservationsForDevice(deviceId));
+		CBR<Reservation, DataR> cbr = new ReservationCBR(_retrive, reuse);
+		var res = cbr.GetResult(dataR);
+		return Task.FromResult(res);
 	}
 
 	[HttpGet]

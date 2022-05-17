@@ -2,10 +2,5 @@
 
 public interface IRetrieve<T>
 {
-	IDataSource<T> DataSource { get; }
-
-	IEnumerable<T> GetSimilarCases()
-	{
-		return DataSource.GetFilteredData();
-	}
+	IEnumerable<T> GetSimilarCases(params object[] objs);
 }
