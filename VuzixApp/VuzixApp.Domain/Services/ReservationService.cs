@@ -1,5 +1,5 @@
 ﻿using VuzixApp.Domain.DataProviderInterfaces;
-using VuzixApp.Domain.Models;
+using VuzixApp.Models;
 
 namespace VuzixApp.Domain.Services;
 

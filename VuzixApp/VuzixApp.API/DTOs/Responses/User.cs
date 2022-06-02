@@ -8,7 +8,7 @@ public class User
 	public string Surname { get; }
 	public string ProfilePicture { get; }
 
-	public User(Domain.Models.User user)
+	public User(Models.User user)
 	{
 		Id = user.Id ?? throw new ArgumentNullException("Id is null");
 		Email = user.Email;

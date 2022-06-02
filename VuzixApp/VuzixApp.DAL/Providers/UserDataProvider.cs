@@ -2,7 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 using VuzixApp.Domain.DataProviderInterfaces;
-using VuzixApp.Domain.Models;
+using VuzixApp.Models;
 
 namespace VuzixApp.DAL.Providers;
 public class UserDataProvider : IUserDataProvider

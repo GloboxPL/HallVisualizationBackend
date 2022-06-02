@@ -7,8 +7,8 @@ using VuzixApp.CBR;
 using VuzixApp.DAL;
 using VuzixApp.DAL.Providers;
 using VuzixApp.Domain.DataProviderInterfaces;
-using VuzixApp.Domain.Models;
 using VuzixApp.Domain.Services;
+using VuzixApp.Models;
 
 namespace VuzixApp.API;
 

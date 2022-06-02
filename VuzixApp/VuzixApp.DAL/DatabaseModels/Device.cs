@@ -1,7 +1,6 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Driver;
-using VuzixApp.Domain.Models;
+using VuzixApp.Models;
 
 namespace VuzixApp.DAL.DatabaseModels;
 

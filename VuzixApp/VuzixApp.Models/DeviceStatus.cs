@@ -1,4 +1,4 @@
-﻿namespace VuzixApp.Domain.Models;
+﻿namespace VuzixApp.Models;
 
 public enum DeviceStatus
 {

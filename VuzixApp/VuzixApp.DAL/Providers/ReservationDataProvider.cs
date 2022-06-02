@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using VuzixApp.CBR;
 using VuzixApp.Domain.DataProviderInterfaces;
-using VuzixApp.Domain.Models;
+using VuzixApp.Models;
 
 namespace VuzixApp.DAL.Providers;
 

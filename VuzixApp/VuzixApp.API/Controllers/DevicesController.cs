@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VuzixApp.API.DTOs.Responses;
-using VuzixApp.Domain.Models;
+using VuzixApp.Models;
 using VuzixApp.Domain.Services;
 
 namespace VuzixApp.API.Controllers;

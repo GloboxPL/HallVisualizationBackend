@@ -1,5 +1,5 @@
 ﻿using VuzixApp.CBR;
-using VuzixApp.Domain.Models;
+using VuzixApp.Models;
 
 namespace VuzixApp.ReservationDatesPrediction;
 

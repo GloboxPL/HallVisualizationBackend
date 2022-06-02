@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VuzixApp.API.DTOs.Responses;
 using VuzixApp.CBR;
-using VuzixApp.Domain.Models;
+using VuzixApp.Models;
 using VuzixApp.Domain.Services;
 using VuzixApp.ReservationDatesPrediction;
 

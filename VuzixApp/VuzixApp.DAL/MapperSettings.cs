@@ -12,15 +12,15 @@ internal static class MapperSettings
 		Configuration = new MapperConfiguration(config =>
 			{
 				//DAL to Domain
-				config.CreateMap<DatabaseModels.Device, Domain.Models.Device>();
-				config.CreateMap<DatabaseModels.Reservation, Domain.Models.Reservation>();
-				config.CreateMap<DatabaseModels.User, Domain.Models.User>();
+				config.CreateMap<DatabaseModels.Device, Models.Device>();
+				config.CreateMap<DatabaseModels.Reservation, Models.Reservation>();
+				config.CreateMap<DatabaseModels.User, Models.User>();
 
 				//Domain to DAL
 				config.CreateMap<string?, ObjectId>().ConvertUsing(s => StringToObjectId(s));
-				config.CreateMap<Domain.Models.Device, DatabaseModels.Device>();
-				config.CreateMap<Domain.Models.Reservation, DatabaseModels.Reservation>();
-				config.CreateMap<Domain.Models.User, DatabaseModels.User>();
+				config.CreateMap<Models.Device, DatabaseModels.Device>();
+				config.CreateMap<Models.Reservation, DatabaseModels.Reservation>();
+				config.CreateMap<Models.User, DatabaseModels.User>();
 			}
 		);
 	}

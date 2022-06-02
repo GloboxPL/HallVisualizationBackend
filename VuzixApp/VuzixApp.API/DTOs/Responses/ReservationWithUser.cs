@@ -7,7 +7,7 @@ public class ReservationWithUser
 	public TimeSpan Duration { get; }
 	public User User { get; }
 
-	public ReservationWithUser(Domain.Models.Reservation reservation, Domain.Models.User user)
+	public ReservationWithUser(Models.Reservation reservation, Models.User user)
 	{
 		Id = reservation.Id ?? throw new ArgumentNullException("Id is null");
 		Start = reservation.Start;

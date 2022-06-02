@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VuzixApp.CBR\VuzixApp.CBR.csproj" />
+    <ProjectReference Include="..\VuzixApp.Models\VuzixApp.Models.csproj" />
   </ItemGroup>
 
 </Project>

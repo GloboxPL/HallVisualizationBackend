@@ -1,4 +1,4 @@
-﻿using VuzixApp.Domain.Models;
+﻿using VuzixApp.Models;
 
 namespace VuzixApp.Domain.Services;
 
