@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VuzixApp.DAL", "VuzixApp\Vu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VuzixApp.CBR", "VuzixApp\VuzixApp.CBR\VuzixApp.CBR.csproj", "{C58EA02F-1305-46F0-81FD-00787AF45CFF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VuzixApp.ReservationDatesPrediction", "VuzixApp.ReservationDatesPrediction\VuzixApp.ReservationDatesPrediction.csproj", "{74265D36-8E75-44B9-B4AB-A45BBD8EF9BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VuzixApp.Models", "VuzixApp\VuzixApp.Models\VuzixApp.Models.csproj", "{BE5A55BB-94FC-45E4-8D69-8F80D5C29E2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VuzixApp.Models", "VuzixApp.Models\VuzixApp.Models.csproj", "{31C3AAF6-43E1-4791-AE13-62891BA24E80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VuzixApp.ReservationDatesPrediction", "VuzixApp\VuzixApp.ReservationDatesPrediction\VuzixApp.ReservationDatesPrediction.csproj", "{459759C5-7607-42DB-A3D9-32091C068AA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +37,14 @@ Global
 		{C58EA02F-1305-46F0-81FD-00787AF45CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C58EA02F-1305-46F0-81FD-00787AF45CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C58EA02F-1305-46F0-81FD-00787AF45CFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{74265D36-8E75-44B9-B4AB-A45BBD8EF9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{74265D36-8E75-44B9-B4AB-A45BBD8EF9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{74265D36-8E75-44B9-B4AB-A45BBD8EF9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{74265D36-8E75-44B9-B4AB-A45BBD8EF9BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31C3AAF6-43E1-4791-AE13-62891BA24E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31C3AAF6-43E1-4791-AE13-62891BA24E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31C3AAF6-43E1-4791-AE13-62891BA24E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31C3AAF6-43E1-4791-AE13-62891BA24E80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5A55BB-94FC-45E4-8D69-8F80D5C29E2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5A55BB-94FC-45E4-8D69-8F80D5C29E2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5A55BB-94FC-45E4-8D69-8F80D5C29E2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5A55BB-94FC-45E4-8D69-8F80D5C29E2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{459759C5-7607-42DB-A3D9-32091C068AA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{459759C5-7607-42DB-A3D9-32091C068AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{459759C5-7607-42DB-A3D9-32091C068AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{459759C5-7607-42DB-A3D9-32091C068AA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,7 +23,60 @@ public class Startup
 
 	public void ConfigureServices(IServiceCollection services)
 	{
-		// Common
+		ConfigureCommonServices(services);
+		ConfigureDALServices(services);
+		ConfigureDomainServices(services);
+	}
+
+	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+	{
+		if (env.IsDevelopment())
+		{
+			app.UseDeveloperExceptionPage();
+		}
+		app.UseSwagger();
+		app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
+
+		app.UseAuthentication();
+
+		//app.UseHttpsRedirection(); // TODO change to HTTPS
+
+		app.UseRouting();
+
+		app.UseAuthorization();
+
+		app.UseEndpoints(endpoints =>
+		{
+			endpoints.MapControllers();
+		});
+	}
+
+	private static void ConfigureDomainServices(IServiceCollection services)
+	{
+		services.AddScoped<IDeviceService, DeviceService>();
+		services.AddScoped<IReservationService, ReservationService>();
+		services.AddScoped<IUserService, UserService>();
+		services.AddScoped<IUserAuthorization, UserService>();
+		services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+	}
+
+	private void ConfigureDALServices(IServiceCollection services)
+	{
+		var mongoConnectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING")
+			?? Configuration.GetConnectionString("Mongo");
+		services.AddSingleton(
+					context => new MongoContext(
+						mongoConnectionString,
+						Configuration.GetSection("Mongo")["Database"])
+					);
+		services.AddScoped<IDeviceDataProvider, DeviceDataProvider>();
+		services.AddScoped<IReservationDataProvider, ReservationDataProvider>();
+		services.AddScoped<IRetrieve<Reservation>, ReservationDataProvider>();
+		services.AddScoped<IUserDataProvider, UserDataProvider>();
+	}
+
+	private static void ConfigureCommonServices(IServiceCollection services)
+	{
 		services.AddAuthentication(option =>
 		{
 			option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -37,7 +90,7 @@ public class Startup
 			{
 				throw new Exception("Envirnonment variable JWT_SECRET_KEY does not exist.");
 			}
-			cfg.RequireHttpsMetadata = false; // TODO remove
+			cfg.RequireHttpsMetadata = false; // TODO change to HTTPS
 			cfg.SaveToken = true;
 			cfg.TokenValidationParameters = new TokenValidationParameters
 			{
@@ -71,46 +124,5 @@ public class Startup
 			}});
 		});
 		services.AddHttpContextAccessor();
-
-		// DAL
-		services.AddSingleton(
-			context => new MongoContext(
-				Configuration.GetConnectionString("Mongo"),
-				Configuration.GetSection("Mongo")["Database"])
-			);
-		services.AddScoped<IDeviceDataProvider, DeviceDataProvider>();
-		services.AddScoped<IReservationDataProvider, ReservationDataProvider>();
-		services.AddScoped<IRetrieve<Reservation>, ReservationDataProvider>();
-		services.AddScoped<IUserDataProvider, UserDataProvider>();
-
-		// Domain
-		services.AddScoped<IDeviceService, DeviceService>();
-		services.AddScoped<IReservationService, ReservationService>();
-		services.AddScoped<IUserService, UserService>();
-		services.AddScoped<IUserAuthorization, UserService>();
-		services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-	}
-
-	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-	{
-		if (env.IsDevelopment())
-		{
-			app.UseDeveloperExceptionPage();
-		}
-		app.UseSwagger();
-		app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
-
-		app.UseAuthentication();
-
-		app.UseHttpsRedirection();
-
-		app.UseRouting();
-
-		app.UseAuthorization();
-
-		app.UseEndpoints(endpoints =>
-		{
-			endpoints.MapControllers();
-		});
 	}
 }

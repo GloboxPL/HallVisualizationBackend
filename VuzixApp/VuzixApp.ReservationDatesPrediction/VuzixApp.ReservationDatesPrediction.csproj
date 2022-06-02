@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VuzixApp\VuzixApp.CBR\VuzixApp.CBR.csproj" />
-    <ProjectReference Include="..\VuzixApp\VuzixApp.Domain\VuzixApp.Domain.csproj" />
+    <ProjectReference Include="..\VuzixApp.CBR\VuzixApp.CBR.csproj" />
+    <ProjectReference Include="..\VuzixApp.Domain\VuzixApp.Domain.csproj" />
   </ItemGroup>
 
 </Project>
